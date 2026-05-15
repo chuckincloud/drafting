@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Protected Page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background: #1a1a2e;
+      color: white;
+    }
+    .box {
+      background: #16213e;
+      padding: 40px;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    }
+    input {
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 6px;
+      border: none;
+      margin: 10px 0;
+      width: 200px;
+    }
+    button {
+      padding: 10px 30px;
+      background: #0f3460;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      display: block;
+      margin: 10px auto 0;
+    }
+    button:hover { background: #e94560; }
+    #err { color: #e94560; margin-top: 10px; }
+  </style>
+</head>
+<body>
+  <div class="box" id="lock">
+    <h2>🔒 Protected Content</h2>
+    <p>Enter password to continue</p>
+    <input type="password" id="pwd" placeholder="Password..." 
+           onkeydown="if(event.key==='Enter') unlock()"/>
+    <button onclick="unlock()">Unlock</button>
+    <p id="err"></p>
+  </div>
+
+  <div id="content" style="display:none; text-align:center;">
+    <!-- ✏️ EDIT BELOW: your actual content -->
+    <h1>🎉 Welcome!</h1>
+    <p>This is your secret content.</p>
+    <a href="https://your-secret-link.com">Click here</a>
+    <!-- ✏️ EDIT ABOVE -->
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+  <script>
+    // ✏️ PASTE YOUR SHA256 HASH HERE
+    const correctHash = "961f30c5556b00d1ef1220d5e92de5c42b4b69dca2f1f731ee0a447faf4b28cc";
+
+    function unlock() {
+      const input = document.getElementById('pwd').value;
+      const hash = CryptoJS.SHA256(input).toString();
+      if (hash === correctHash) {
+        document.getElementById('lock').style.display = 'none';
+        document.getElementById('content').style.display = 'block';
+      } else {
+        document.getElementById('err').innerText = '❌ Wrong password';
+      }
+    }
+  </script>
+</body>
+</html>
