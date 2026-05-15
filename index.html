@@ -71,6 +71,7 @@
     function unlock() {
       const input = document.getElementById('pwd').value;
       const hash = CryptoJS.SHA256(input).toString();
+      alert("Generated hash:\n" + hash); // 👈 add this temporarily
       if (hash === correctHash) {
         document.getElementById('lock').style.display = 'none';
         document.getElementById('content').style.display = 'block';
